@@ -5,8 +5,10 @@ using System.Web;
 
 namespace CHSystem.Models
 {
-    public class BaseEntity
+    public class Group:BaseEntity
     {
-        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public virtual List<User> Users { get; set; }
     }
 }
