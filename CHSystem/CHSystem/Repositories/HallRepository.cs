@@ -7,6 +7,8 @@ using System.Web;
 namespace CHSystem.Repositories
 {
     public class HallRepository:BaseRepository<Hall>
-    {
+    { 
+        public HallRepository():base (){ }
+        public HallRepository(UnitOfWork unitOfWork):base(unitOfWork){ }
     }
 }

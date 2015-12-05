@@ -30,6 +30,7 @@ namespace CHSystem.Repositories
         public BaseRepository()
         {
             this.Context = new CHSystemContext();
+            this.DbSet = this.Context.Set<T>();
         }
 
         public virtual List<T> GetAll()
@@ -74,9 +75,9 @@ namespace CHSystem.Repositories
                 Insert(entity);
         }
 
-        public virtual void Delete(T entity)
+        public virtual void Delete(int id)
         {
-            this.DbSet.Remove(entity);
+            this.DbSet.Remove(GetByID(id));
             this.Context.SaveChanges();
         }
 
