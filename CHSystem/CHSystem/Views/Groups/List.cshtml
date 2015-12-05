@@ -1,0 +1,28 @@
+﻿@model CHSystem.ViewModels.Groups.GroupsListVM
+
+@{
+    ViewBag.Title = "List Groups";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Edit")
+</p>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th></th>
+    </tr>
+
+@foreach (var group in Model.Groups) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => group.Name)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = group.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = group.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -8,5 +8,7 @@ namespace CHSystem.Repositories
 {
     public class GroupRepository:BaseRepository<Group>
     {
+        public GroupRepository():base (){ }
+        public GroupRepository(UnitOfWork unitOfWork):base(unitOfWork){ }
     }
 }

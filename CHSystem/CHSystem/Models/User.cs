@@ -14,6 +14,6 @@ namespace CHSystem.Models
         public string Email { get; set; }
 
         public virtual List<Group> Groups { get; set; }
-        public List<Event> Events { get; set; }
+        public virtual List<Event> Events { get; set; }
     }
 }
