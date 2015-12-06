@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CHSystem.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         static UnitOfWork unitOfWork = new UnitOfWork();
         UserRepository userRep = new UserRepository(unitOfWork);
