@@ -126,8 +126,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="CHSystemContext.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Filters\AuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -146,6 +149,7 @@
     <Compile Include="Repositories\LocationRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="ViewModels\Groups\GroupsEditVM.cs" />
     <Compile Include="ViewModels\Groups\GroupsListVM.cs" />
     <Compile Include="ViewModels\Users\UsersEditVM.cs" />
@@ -161,6 +165,7 @@
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Users\List.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -170,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>

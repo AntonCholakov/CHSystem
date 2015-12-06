@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CHSystem.Controllers
 {
-    public class GroupsController : Controller
+    public class GroupsController : BaseController
     {
         GroupRepository groupRep = new GroupRepository();
 
