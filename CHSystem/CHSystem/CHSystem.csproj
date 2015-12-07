@@ -135,8 +135,11 @@
     <Compile Include="CHSystemContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\HallsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\AuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -159,8 +162,14 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="ViewModels\Account\AccountLoginVM.cs" />
+    <Compile Include="ViewModels\Events\EventsEditVM.cs" />
+    <Compile Include="ViewModels\Events\EventsListVM.cs" />
     <Compile Include="ViewModels\Groups\GroupsEditVM.cs" />
     <Compile Include="ViewModels\Groups\GroupsListVM.cs" />
+    <Compile Include="ViewModels\Halls\HallsEditVM.cs" />
+    <Compile Include="ViewModels\Halls\HallsListVM.cs" />
+    <Compile Include="ViewModels\Locations\LocationsEditVM.cs" />
+    <Compile Include="ViewModels\Locations\LocationsListVM.cs" />
     <Compile Include="ViewModels\Users\UsersEditVM.cs" />
     <Compile Include="ViewModels\Users\UsersListVM.cs" />
   </ItemGroup>
@@ -178,6 +187,12 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Locations\List.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Halls\List.cshtml" />
+    <Content Include="Views\Halls\Edit.cshtml" />
+    <Content Include="Views\Events\List.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -187,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

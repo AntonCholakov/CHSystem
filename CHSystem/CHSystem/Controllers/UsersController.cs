@@ -99,7 +99,7 @@ namespace CHSystem.Controllers
             model.LastName = user.LastName;
             model.Email = user.Email;
             model.Groups = PopulateAssignedGroups(user);
-
+            
             return View(model);
         }
 
@@ -154,7 +154,7 @@ namespace CHSystem.Controllers
 
             return RedirectToAction("List");
         }
-
+        
         public ActionResult Delete(int id)
         {
             userRep.Delete(id);
