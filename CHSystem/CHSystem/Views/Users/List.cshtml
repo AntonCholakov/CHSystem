@@ -79,4 +79,4 @@
 Page @(Model.UsersPagedList.PageCount < Model.UsersPagedList.PageNumber ? 0 : Model.UsersPagedList.PageNumber) of @Model.UsersPagedList.PageCount
 
 @Html.PagedListPager(Model.UsersPagedList, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    new { page, sortOrder = Model.SortOrder, currentFilter = ViewBag.CurrentFilter }))

@@ -9,14 +9,40 @@ using System.Web.Mvc;
 
 namespace CHSystem.Controllers
 {
-    public class LocationsController : Controller
+    public class LocationsController : BaseController
     {
         LocationRepository locationRep = new LocationRepository();
 
         public ActionResult List()
         {
             LocationsListVM model = new LocationsListVM();
+            TryUpdateModel(model);
             model.Locations = locationRep.GetAll();
+
+
+            if (!String.IsNullOrEmpty(model.Search))
+            {
+                model.Search = model.Search.ToLower();
+                model.Locations = model.Locations.Where(l => l.Name.ToLower().Contains(model.Search)).ToList();
+            }
+
+            model.Props = new Dictionary<string, object>();
+            switch (model.SortOrder)
+            {
+                case "address_desc":
+                    model.Locations = model.Locations.OrderByDescending(l => l.Address).ToList();
+                    break;
+                case "address_asc":
+                    model.Locations = model.Locations.OrderBy(l => l.Address).ToList();
+                    break;
+                case "name_desc":
+                    model.Locations = model.Locations.OrderByDescending(l => l.Name).ToList();
+                    break;
+                case "name_asc":
+                default:
+                    model.Locations = model.Locations.OrderBy(l => l.Name).ToList();
+                    break;
+            }
 
             return View(model);
         }

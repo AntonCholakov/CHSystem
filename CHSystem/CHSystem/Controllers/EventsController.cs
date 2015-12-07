@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CHSystem.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController : BaseController
     {
         static UnitOfWork unitOfWork = new UnitOfWork();
         EventRepository eventRep = new EventRepository(unitOfWork);
