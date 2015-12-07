@@ -1,6 +1,7 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
 using CHSystem.ViewModels.Users;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,63 @@ namespace CHSystem.Controllers
         static UnitOfWork unitOfWork = new UnitOfWork();
         UserRepository userRep = new UserRepository(unitOfWork);
 
-        public ActionResult List()
+        public ActionResult List(string currentFilter, int? page)
         {
             UsersListVM model = new UsersListVM();
+            TryUpdateModel(model);
+
+            if (!String.IsNullOrEmpty(model.Search))
+            {
+                page = 1;
+            }
+            else
+            {
+                model.Search = currentFilter;
+            }
+
             model.Users = userRep.GetAll();
+
+            if (!String.IsNullOrEmpty(model.Search))
+            {
+                model.Users = model.Users.Where(u => u.Username.Contains(model.Search) ||
+                                                    u.FirstName.Contains(model.Search) ||
+                                                    u.LastName.Contains(model.Search)).ToList();
+            }
+
+            model.Props = new Dictionary<string, object>();
+            switch (model.SortOrder)
+            {
+                case "username_asc":
+                    model.Users = model.Users.OrderBy(u => u.Username).ToList();
+                    break;
+                case "fname_asc":
+                    model.Users = model.Users.OrderBy(u => u.FirstName).ToList();
+                    break;
+                case "fname_desc":
+                    model.Users = model.Users.OrderByDescending(u => u.FirstName).ToList();
+                    break;
+                case "lname_asc":
+                    model.Users = model.Users.OrderBy(u => u.LastName).ToList();
+                    break;
+                case "lname_desc":
+                    model.Users = model.Users.OrderByDescending(u => u.LastName).ToList();
+                    break;
+                case "email_asc":
+                    model.Users = model.Users.OrderBy(u => u.Email).ToList();
+                    break;
+                case "email_desc":
+                    model.Users = model.Users.OrderByDescending(u => u.Email).ToList();
+                    break;
+                case "username_desc":
+                default:
+                    model.Users = model.Users.OrderByDescending(u => u.Username).ToList();
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            model.UsersPagedList = model.Users.ToPagedList(pageNumber, pageSize);
 
             return View(model);
         }

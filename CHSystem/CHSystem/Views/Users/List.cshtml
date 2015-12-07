@@ -1,5 +1,10 @@
 ﻿@model CHSystem.ViewModels.Users.UsersListVM
 
+@using PagedList
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 @{
     ViewBag.Title = "List Users";
 }
@@ -9,12 +14,41 @@
 <p>
     @Html.ActionLink("Create New", "Edit")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBoxFor(model => model.Search, new { @class = "form-control" })
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+}
+
 <table class="table">
     <tr>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "username_asc" ? "username_desc" : "username_asc";
+                @Html.ActionLink("Username", "List", "Users", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "fname_asc" ? "fname_desc" : "fname_asc";
+                @Html.ActionLink("First Name", "List", "Users", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "lname_asc" ? "lname_desc" : "lname_asc";
+                @Html.ActionLink("Last Name", "List", "Users", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "email_asc" ? "email_desc" : "email_asc";
+                @Html.ActionLink("Email", "List", "Users", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
         <th></th>
     </tr>
 
@@ -40,3 +74,9 @@
 }
 
 </table>
+
+<br />
+Page @(Model.UsersPagedList.PageCount < Model.UsersPagedList.PageNumber ? 0 : Model.UsersPagedList.PageNumber) of @Model.UsersPagedList.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
