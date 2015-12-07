@@ -1,0 +1,42 @@
+﻿@model CHSystem.ViewModels.Locations.LocationsListVM
+
+@{
+    ViewBag.Title = "List Locations";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Edit")
+</p>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Floor</th>
+        <th>Room Number</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Locations) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Floor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
