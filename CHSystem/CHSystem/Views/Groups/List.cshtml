@@ -1,5 +1,8 @@
 ﻿@model CHSystem.ViewModels.Groups.GroupsListVM
 
+@using PagedList
+@using PagedList.Mvc
+
 @{
     ViewBag.Title = "List Groups";
 }
@@ -9,9 +12,23 @@
 <p>
     @Html.ActionLink("Create New", "Edit")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBoxFor(model => model.Search, new { @class = "form-control" })
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+}
+
 <table class="table">
     <tr>
-        <th>Name</th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "name_asc" ? "name_desc" : "name_asc";
+                @Html.ActionLink("Name", "List", "Groups", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
         <th></th>
     </tr>
 
@@ -26,3 +43,8 @@
 }
 
 </table>
+
+Page @(Model.GroupsPagedList.PageCount < Model.GroupsPagedList.PageNumber ? 0 : Model.GroupsPagedList.PageNumber) of @Model.GroupsPagedList.PageCount
+
+@Html.PagedListPager(Model.GroupsPagedList, page => Url.Action("List",
+    new { page, sortOrder = Model.SortOrder, currentFilter = Model.Search }))

@@ -1,10 +1,10 @@
 ﻿@model CHSystem.ViewModels.Halls.HallsEditVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.ID > 0 ? "Edit Hall" : "Add New Hall";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {

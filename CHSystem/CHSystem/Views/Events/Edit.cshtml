@@ -1,10 +1,10 @@
 ﻿@model CHSystem.ViewModels.Events.EventsEditVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.ID > 0 ? "Edit Event" : "Add New Event";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {

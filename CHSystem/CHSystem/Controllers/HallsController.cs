@@ -16,7 +16,26 @@ namespace CHSystem.Controllers
         public ActionResult List()
         {
             HallsListVM model = new HallsListVM();
+            TryUpdateModel(model);
             model.Halls = hallRep.GetAll();
+
+            if (!String.IsNullOrEmpty(model.Search))
+            {
+                model.Search = model.Search.ToLower();
+                model.Halls = model.Halls.Where(h => h.Name.ToLower().Contains(model.Search)).ToList();
+            }
+
+            model.Props = new Dictionary<string, object>();
+            switch (model.SortOrder)
+            {
+                case "name_desc":
+                    model.Halls = model.Halls.OrderByDescending(h => h.Name).ToList();
+                    break;
+                case "name_asc":
+                default:
+                    model.Halls = model.Halls.OrderBy(h => h.Name).ToList();
+                    break;
+            }
 
             return View(model);
         }

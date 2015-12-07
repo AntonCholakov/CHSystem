@@ -33,16 +33,17 @@ namespace CHSystem.Controllers
 
             if (!String.IsNullOrEmpty(model.Search))
             {
-                model.Users = model.Users.Where(u => u.Username.Contains(model.Search) ||
-                                                    u.FirstName.Contains(model.Search) ||
-                                                    u.LastName.Contains(model.Search)).ToList();
+                model.Search = model.Search.ToLower();
+                model.Users = model.Users.Where(u => u.Username.ToLower().Contains(model.Search) ||
+                                                    u.FirstName.ToLower().Contains(model.Search) ||
+                                                    u.LastName.ToLower().Contains(model.Search)).ToList();
             }
 
             model.Props = new Dictionary<string, object>();
             switch (model.SortOrder)
             {
-                case "username_asc":
-                    model.Users = model.Users.OrderBy(u => u.Username).ToList();
+                case "username_desc":
+                    model.Users = model.Users.OrderByDescending(u => u.Username).ToList();
                     break;
                 case "fname_asc":
                     model.Users = model.Users.OrderBy(u => u.FirstName).ToList();
@@ -62,9 +63,9 @@ namespace CHSystem.Controllers
                 case "email_desc":
                     model.Users = model.Users.OrderByDescending(u => u.Email).ToList();
                     break;
-                case "username_desc":
+                case "username_asc":
                 default:
-                    model.Users = model.Users.OrderByDescending(u => u.Username).ToList();
+                    model.Users = model.Users.OrderBy(u => u.Username).ToList();
                     break;
             }
 

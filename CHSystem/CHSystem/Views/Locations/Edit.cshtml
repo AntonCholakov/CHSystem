@@ -1,10 +1,10 @@
 ﻿@model CHSystem.ViewModels.Locations.LocationsEditVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.ID > 0 ? "Edit Location" : "Add New Location";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
