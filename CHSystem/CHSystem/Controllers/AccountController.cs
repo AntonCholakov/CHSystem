@@ -42,7 +42,7 @@ namespace CHSystem.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return Redirect(model.RedirectUrl);
         }
     }
 }
