@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Calendar";
+}
+
+@section footerSection{
+    <script src='~/Scripts/moment.min.js'></script>
+    <script src='~/libs/fullcalendar.js'></script>
+
+    <script>
+        $(document).ready(function () {
+            // page is now ready, initialize the calendar...
+
+            events = new Array();
+            var url = "https://www.googleapis.com/calendar/v3/calendars/antoncholakov14@gmail.com/events?key=AIzaSyAvlDTqNqrTv1g6izrUL1YHuFqGlY427Vg";
+            $.getJSON(url, function (items) {
+                for (var i = 0; i < items.items.length; i++) {
+                    events.push(
+                        {
+                            title: items.items[i].summary,
+                            start: items.items[i].start.dateTime
+                        });
+                    $("#event-list").append(items.items[i].summary + "<br/>");
+                }
+
+                $('#calendar').fullCalendar({
+                    dayClick: function () {
+                        alert('a day has been clicked!');
+                    },
+                    firstDay: 1,
+                    selectable: true,
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+                    events: events
+                });
+            });
+
+
+            $("#event-list").append(events);
+
+            console.log(events);
+
+            //events.push(
+            //    {   
+            //        title: "aaaa",
+            //        start: "Tue, 8 Dec 2015 13:00:00 EST"
+            //    },
+            //    {   
+            //        title: "bbb",
+            //        start: "Tue, 9 Dec 2015 13:00:00 EST"
+            //    });
+
+            
+        });
+    </script>
+}
+
+<h2>Calendar</h2>
+
+<div id="event-list"></div>
+
+<div id="calendar"></div>
+

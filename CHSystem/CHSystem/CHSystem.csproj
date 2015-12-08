@@ -113,6 +113,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="libs\fullcalendar.css" />
+    <Content Include="libs\fullcalendar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -124,6 +126,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
@@ -135,6 +138,7 @@
     <Compile Include="CHSystemContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HallsController.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="ViewModels\Account\AccountLoginVM.cs" />
     <Compile Include="ViewModels\Events\EventsEditVM.cs" />
     <Compile Include="ViewModels\Events\EventsListVM.cs" />
@@ -193,6 +198,7 @@
     <Content Include="Views\Halls\Edit.cshtml" />
     <Content Include="Views\Events\List.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Calendar\Calendar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
