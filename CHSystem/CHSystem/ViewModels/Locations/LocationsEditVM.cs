@@ -10,7 +10,7 @@ namespace CHSystem.ViewModels.Locations
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
         public string Name { get; set; }
 
         [Required]
