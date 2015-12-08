@@ -87,6 +87,7 @@ namespace CHSystem.Controllers
             if (!ModelState.IsValid)
             {
                 model.Users = PopulateAssignedUsers(CHevent);
+                model.Halls = GetHalls();
 
                 return View(model);
             }
@@ -100,6 +101,7 @@ namespace CHSystem.Controllers
             UpdateEventUsers(CHevent, assignedUsers);
 
             eventRep.Save(CHevent);
+            unitOfWork.Commit();
 
             return RedirectToAction("List");
         }

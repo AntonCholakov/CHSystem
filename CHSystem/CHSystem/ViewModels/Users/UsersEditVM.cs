@@ -11,13 +11,13 @@ namespace CHSystem.ViewModels.Users
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
         public string Username { get; set; }
 
-        [Required]
+        [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
         public string LastName { get; set; }
 
         [Required]
