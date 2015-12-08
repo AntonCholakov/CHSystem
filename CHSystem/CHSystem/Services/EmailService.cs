@@ -21,10 +21,31 @@ namespace CHSystem.Services
             smtp.EnableSsl = true;
             smtp.UseDefaultCredentials = false;
             #region Private
-            smtp.Credentials = new System.Net.NetworkCredential("antoncholakov14@gmail.com", "...");
+            smtp.Credentials = new System.Net.NetworkCredential("chsystemstd@gmail.com", "SlojnaParola123");
             #endregion
 
             smtp.Send(message);
+        }
+
+        public static void SendEmail(List<User> users)
+        {
+            MailMessage message = new MailMessage();
+            message.Sender = new MailAddress("no-reply@chsystem.com");
+            message.Subject = "Subject";
+            message.From = new MailAddress("no-reply@chsystem.com");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            #region Private
+            smtp.Credentials = new System.Net.NetworkCredential("chsystemstd@gmail.com", "SlojnaParola123");
+            #endregion
+
+            foreach (var user in users)
+            {
+                message.To.Add(user.Email);
+                message.Body = String.Format("Hello, {0} {1}! You've been invited to event!", user.FirstName, user.LastName);
+                smtp.Send(message);
+            }
         }
     }
 }

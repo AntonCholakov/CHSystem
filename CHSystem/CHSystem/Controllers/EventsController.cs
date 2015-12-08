@@ -1,5 +1,6 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
+using CHSystem.Services;
 using CHSystem.ViewModels.Events;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,8 @@ namespace CHSystem.Controllers
 
             eventRep.Save(CHevent);
             unitOfWork.Commit();
+
+            System.Threading.Tasks.Task.Run(() => EmailService.SendEmail(CHevent.Users));
 
             return RedirectToAction("List");
         }
