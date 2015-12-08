@@ -42,7 +42,6 @@ namespace CHSystem.Controllers
                 return View(model);
             }
 
-            EmailService.SendEmail(AuthenticationService.LoggedUser);
             return Redirect(model.RedirectUrl);
         }
     }
