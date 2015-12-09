@@ -1,0 +1,98 @@
+﻿@model CHSystem.ViewModels.Pager.PagingVM
+
+<div class="form-group">
+    @{ var currentPageName = CHSystem.Services.PagingService.CurrentPageAlias; }
+    @if (Model.PageCount > 1)
+    {
+        <ul class="pagination pull-left">
+            <li>
+                @{
+                    Model.LinkParameters[Model.Prefix + "." + currentPageName] = 1;
+                    @Html.ActionLink("<<", Model.Action, Model.Controller, new RouteValueDictionary(Model.LinkParameters), null)
+                }
+            </li>
+            <li>
+                @{
+                    Model.LinkParameters[Model.Prefix + "." + currentPageName] = Model.CurrentPage <= 1 ? 1 : Model.CurrentPage - 1;
+                    @Html.ActionLink("<", Model.Action, Model.Controller, new RouteValueDictionary(Model.LinkParameters), null)
+                }
+            </li>
+            @{
+                int maxPage = 0, minPage = 0;
+
+                if (Model.PageCount <= Model.MaxPageNumbersShown)
+                {
+                    minPage = 1;
+                    maxPage = Model.PageCount;
+                }
+                else if (Model.CurrentPage <= Model.MaxPageNumbersShown / 2)
+                {
+                    minPage = 1;
+                    maxPage = Model.MaxPageNumbersShown;
+                }
+                else if (Model.CurrentPage > Model.PageCount - Model.MaxPageNumbersShown / 2)
+                {
+                    minPage = Model.PageCount - Model.MaxPageNumbersShown + 1;
+                    maxPage = Model.PageCount;
+                }
+                else
+                {
+                    minPage = Model.CurrentPage - Model.MaxPageNumbersShown / 2;
+                    maxPage = Model.CurrentPage + Model.MaxPageNumbersShown / 2;
+
+                    if (maxPage - minPage + 1 > Model.MaxPageNumbersShown)
+                    {
+                        minPage += 1;
+                    }
+                }
+
+                for (int i = minPage; i <= maxPage; i++)
+                {
+                    Model.LinkParameters[Model.Prefix + "." + currentPageName] = i;
+                    <li @if (i == Model.CurrentPage) { @Html.Raw("class=\"active\"")                                      }>
+                        @Html.ActionLink(i.ToString(), Model.Action, Model.Controller, new RouteValueDictionary(Model.LinkParameters), null)
+                    </li>
+                }
+            }
+            <li>
+                @{
+                    Model.LinkParameters[Model.Prefix + "." + currentPageName] = Model.CurrentPage == Model.PageCount ? Model.PageCount : Model.CurrentPage + 1;
+                    @Html.ActionLink(">", Model.Action, Model.Controller, new RouteValueDictionary(Model.LinkParameters), null)
+                }
+            </li>
+            <li>
+                @{
+                    Model.LinkParameters[Model.Prefix + "." + currentPageName] = Model.PageCount;
+                    @Html.ActionLink(">>", Model.Action, Model.Controller, new RouteValueDictionary(Model.LinkParameters), null)
+                }
+            </li>
+        </ul>
+                    }
+    @if (!(Model.PageCount == 1 && Model.ItemsPerPage == 10))
+    {
+        using (Html.BeginForm(Model.Action, Model.Controller, FormMethod.Get, new { id = "PagingForm" }))
+        {
+            var itemsperPageName = CHSystem.Services.PagingService.ItemsPerPageAlias;
+            foreach (var item in Model.LinkParameters)
+            {
+                if (item.Key == Model.Prefix + "." + currentPageName || item.Key == Model.Prefix + "." + itemsperPageName)
+                {
+                    continue;
+                }
+
+                var value = item.Value != null && item.Value.GetType() == typeof(DateTime) ? Convert.ToDateTime(item.Value).ToString("yyyy-MM-dd") : item.Value;
+                <input type="hidden" name="@item.Key" value="@value" />
+            }
+
+            <select class="form-control pull-left" id="ItemsPerPage" name="@Html.Raw(Model.Prefix + "." + itemsperPageName)" onchange=" document.getElementById('PagingForm').submit();" style="width: auto; margin: 20px 0 20px 10px">
+                @{
+                    var ippArr = new int[] { 10, 20, 50, 100 };
+                    foreach (var item in ippArr)
+                    {
+                        <option @if (item == Model.ItemsPerPage) { @Html.Raw("selected") } value="@item">@item</option>
+                    }
+                }
+            </select>
+                        }
+                    }
+</div>

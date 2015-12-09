@@ -1,13 +1,12 @@
-﻿using CHSystem.Models;
-using System;
+﻿using CHSystem.Attributes;
+using CHSystem.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CHSystem.ViewModels.Events
 {
-    public class EventsListVM
+    public class EventsListVM : ListVM
     {
+        [CollectionProperty]
         public List<Event> Events { get; set; }
     }
 }

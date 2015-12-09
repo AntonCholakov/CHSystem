@@ -1,8 +1,5 @@
 ﻿@model CHSystem.ViewModels.Groups.GroupsListVM
 
-@using PagedList
-@using PagedList.Mvc
-
 @{
     ViewBag.Title = "List Groups";
 }
@@ -44,7 +41,5 @@
 
 </table>
 
-Page @(Model.GroupsPagedList.PageCount < Model.GroupsPagedList.PageNumber ? 0 : Model.GroupsPagedList.PageNumber) of @Model.GroupsPagedList.PageCount
-
-@Html.PagedListPager(Model.GroupsPagedList, page => Url.Action("List",
-    new { page, sortOrder = Model.SortOrder, currentFilter = Model.Search }))
+@Html.Partial("~/Views/Shared/PartialViews/_PagingPartial.cshtml", Model.Pager)
+<br />

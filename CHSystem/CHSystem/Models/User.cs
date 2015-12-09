@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CHSystem.Models
 {
-    public class User:BaseEntity
+    public class User : BaseModel
     {
         public string Username { get; set; }
         public string Password { get; set; }

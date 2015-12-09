@@ -1,11 +1,10 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
+using CHSystem.Services;
 using CHSystem.ViewModels.Groups;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.Controllers
@@ -14,20 +13,10 @@ namespace CHSystem.Controllers
     {
         GroupRepository groupRep = new GroupRepository();
 
-        public ActionResult List(string currentFilter, int? page)
+        public ActionResult List()
         {
             GroupsListVM model = new GroupsListVM();
             TryUpdateModel(model);
-
-            if (!String.IsNullOrEmpty(model.Search))
-            {
-                page = 1;
-            }
-            else
-            {
-                model.Search = currentFilter;
-            }
-
             model.Groups = groupRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -48,10 +37,7 @@ namespace CHSystem.Controllers
                     break;
             }
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
-            model.GroupsPagedList = model.Groups.ToPagedList(pageNumber, pageSize);
+            PagingService.Prepare(model, ControllerContext, model.Groups);
 
             return View(model);
         }

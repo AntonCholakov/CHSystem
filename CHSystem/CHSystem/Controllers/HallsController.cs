@@ -1,10 +1,10 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
+using CHSystem.Services;
 using CHSystem.ViewModels.Halls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.Controllers
@@ -12,7 +12,7 @@ namespace CHSystem.Controllers
     public class HallsController : BaseController
     {
         HallRepository hallRep = new HallRepository();
-        // GET: Halls
+        
         public ActionResult List()
         {
             HallsListVM model = new HallsListVM();
@@ -31,11 +31,19 @@ namespace CHSystem.Controllers
                 case "name_desc":
                     model.Halls = model.Halls.OrderByDescending(h => h.Name).ToList();
                     break;
+                case "loc_desc":
+                    model.Halls = model.Halls.OrderByDescending(h => h.Location.Name).ToList();
+                    break;
+                case "loc_asc":
+                    model.Halls = model.Halls.OrderBy(h => h.Location.Name).ToList();
+                    break;
                 case "name_asc":
                 default:
                     model.Halls = model.Halls.OrderBy(h => h.Name).ToList();
                     break;
             }
+
+            PagingService.Prepare(model, ControllerContext, model.Halls);
 
             return View(model);
         }

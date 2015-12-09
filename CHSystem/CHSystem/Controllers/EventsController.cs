@@ -5,7 +5,6 @@ using CHSystem.ViewModels.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.Controllers
@@ -14,11 +13,50 @@ namespace CHSystem.Controllers
     {
         static UnitOfWork unitOfWork = new UnitOfWork();
         EventRepository eventRep = new EventRepository(unitOfWork);
-        // GET: Events
+
         public ActionResult List()
         {
             EventsListVM model = new EventsListVM();
+            TryUpdateModel(model);
             model.Events = eventRep.GetAll();
+
+            if (!String.IsNullOrEmpty(model.Search))
+            {
+                model.Search = model.Search.ToLower();
+                model.Events = model.Events.Where(e => e.Name.ToLower().Contains(model.Search)).ToList();
+            }
+
+            model.Props = new Dictionary<string, object>();
+            switch (model.SortOrder)
+            {
+                case "name_desc":
+                    model.Events = model.Events.OrderByDescending(e => e.Name).ToList();
+                    break;
+                case "hall_asc":
+                    model.Events = model.Events.OrderBy(e => e.Hall.Name).ToList();
+                    break;
+                case "hall_desc":
+                    model.Events = model.Events.OrderByDescending(e => e.Hall.Name).ToList();
+                    break; ;
+                case "start_asc":
+                    model.Events = model.Events.OrderBy(e => e.Start).ToList();
+                    break;
+                case "start_desc":
+                    model.Events = model.Events.OrderByDescending(e => e.Start).ToList();
+                    break;
+                case "end_asc":
+                    model.Events = model.Events.OrderBy(e => e.End).ToList();
+                    break;
+                case "end_desc":
+                    model.Events = model.Events.OrderByDescending(e => e.End).ToList();
+                    break;
+                case "name_asc":
+                default:
+                    model.Events = model.Events.OrderBy(e => e.Name).ToList();
+                    break;
+            }
+
+            PagingService.Prepare(model, ControllerContext, model.Events);
 
             return View(model);
         }

@@ -1,11 +1,10 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
+using CHSystem.Services;
 using CHSystem.ViewModels.Users;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.Controllers
@@ -15,20 +14,10 @@ namespace CHSystem.Controllers
         static UnitOfWork unitOfWork = new UnitOfWork();
         UserRepository userRep = new UserRepository(unitOfWork);
 
-        public ActionResult List(string currentFilter, int? page)
+        public ActionResult List()
         {
             UsersListVM model = new UsersListVM();
             TryUpdateModel(model);
-
-            if (!String.IsNullOrEmpty(model.Search))
-            {
-                page = 1;
-            }
-            else
-            {
-                model.Search = currentFilter;
-            }
-
             model.Users = userRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -69,10 +58,7 @@ namespace CHSystem.Controllers
                     break;
             }
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
-            model.UsersPagedList = model.Users.ToPagedList(pageNumber, pageSize);
+            PagingService.Prepare(model, ControllerContext, model.Users);
 
             return View(model);
         }
@@ -152,6 +138,7 @@ namespace CHSystem.Controllers
             UpdateUserGroups(user, assignedGroups);
 
             userRep.Save(user);
+            unitOfWork.Commit();
 
             return RedirectToAction("List");
         }

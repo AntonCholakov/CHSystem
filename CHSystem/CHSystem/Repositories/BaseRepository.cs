@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CHSystem.Repositories
 {
-    public abstract class BaseRepository<T> where T : BaseEntity
+    public abstract class BaseRepository<T> where T : BaseModel
     {
         protected DbContext Context { set; get; }
         private DbSet<T> DbSet { get; set; }

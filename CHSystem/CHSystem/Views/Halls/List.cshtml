@@ -28,7 +28,12 @@
                 @Html.ActionLink("Name", "List", "Halls", new RouteValueDictionary(Model.Props), null)
             }
         </th>
-        <th>Location</th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "loc_asc" ? "loc_desc" : "loc_asc";
+                @Html.ActionLink("Location", "List", "Halls", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
         <th></th>
     </tr>
 
@@ -48,3 +53,6 @@
 }
 
 </table>
+
+@Html.Partial("~/Views/Shared/PartialViews/_PagingPartial.cshtml", Model.Pager)
+<br />

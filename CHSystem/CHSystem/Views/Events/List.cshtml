@@ -9,13 +9,41 @@
 <p>
     @Html.ActionLink("Create New", "Edit")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBoxFor(model => model.Search, new { @class = "form-control" })
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+}
+
 <table class="table">
     <tr>
-        <th>Name</th>
-        <th>Hall</th>
-        <th>Date</th>
-        <th>Start</th>
-        <th>End</th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "name_asc" ? "name_desc" : "name_asc";
+                @Html.ActionLink("Name", "List", "Events", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
+        <th>
+            @{
+                 Model.Props["sortOrder"] = Model.SortOrder == "hall_asc" ? "hall_desc" : "hall_asc";
+                @Html.ActionLink("Hall", "List", "Events", new RouteValueDictionary(Model.Props), null)
+            }   
+        </th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "start_asc" ? "start_desc" : "start_asc";
+                @Html.ActionLink("Start", "List", "Events", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
+        <th>
+            @{
+                Model.Props["sortOrder"] = Model.SortOrder == "end_asc" ? "end_desc" : "end_asc";
+                @Html.ActionLink("End", "List", "Events", new RouteValueDictionary(Model.Props), null)
+            }
+        </th>
         <th></th>
     </tr>
 
@@ -26,9 +54,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Hall.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Start)
@@ -45,3 +70,6 @@
 }
 
 </table>
+
+@Html.Partial("~/Views/Shared/PartialViews/_PagingPartial.cshtml", Model.Pager)
+<br />

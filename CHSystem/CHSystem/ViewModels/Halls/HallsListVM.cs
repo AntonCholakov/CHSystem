@@ -1,22 +1,12 @@
-﻿using CHSystem.Models;
-using PagedList;
-using System;
+﻿using CHSystem.Attributes;
+using CHSystem.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CHSystem.ViewModels.Halls
 {
-    public class HallsListVM
+    public class HallsListVM : ListVM
     {
+        [CollectionProperty]
         public List<Hall> Halls { get; set; }
-
-        public IPagedList HallsPagedList { get; set; }
-
-        public string SortOrder { get; set; }
-
-        public Dictionary<string, object> Props { get; set; }
-
-        public string Search { get; set; }
     }
 }
