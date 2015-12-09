@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CHSystem.Models
 {
-    public class Event:BaseEntity
+    public class Event : BaseModel
     {
         public string Name { get; set; }
         public int HallID { get; set; }

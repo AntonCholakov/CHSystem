@@ -135,6 +135,9 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\AliasAttribute.cs" />
+    <Compile Include="Attributes\CollectionPropertyAttribute.cs" />
+    <Compile Include="Attributes\FilterPropertyAttribute.cs" />
     <Compile Include="CHSystemContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -150,7 +153,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Hall.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\PagingService.cs" />
     <Compile Include="ViewModels\Account\AccountLoginVM.cs" />
     <Compile Include="ViewModels\Events\EventsEditVM.cs" />
     <Compile Include="ViewModels\Events\EventsListVM.cs" />
@@ -173,8 +177,10 @@
     <Compile Include="ViewModels\Groups\GroupsListVM.cs" />
     <Compile Include="ViewModels\Halls\HallsEditVM.cs" />
     <Compile Include="ViewModels\Halls\HallsListVM.cs" />
+    <Compile Include="ViewModels\ListVM.cs" />
     <Compile Include="ViewModels\Locations\LocationsEditVM.cs" />
     <Compile Include="ViewModels\Locations\LocationsListVM.cs" />
+    <Compile Include="ViewModels\Pager\PagingVM.cs" />
     <Compile Include="ViewModels\Users\UsersEditVM.cs" />
     <Compile Include="ViewModels\Users\UsersListVM.cs" />
   </ItemGroup>
@@ -199,6 +205,7 @@
     <Content Include="Views\Events\List.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Calendar\Calendar.cshtml" />
+    <Content Include="Views\Shared\PartialViews\_PagingPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

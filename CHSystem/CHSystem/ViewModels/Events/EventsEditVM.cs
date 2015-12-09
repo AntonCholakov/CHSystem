@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.ViewModels.Events
 {
-    public class EventsEditVM
+    public class EventsEditVM : EditVM
     {
-        public int ID { get; set; }
-
         [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
         public string Name { get; set; }
 
@@ -26,7 +21,7 @@ namespace CHSystem.ViewModels.Events
 
         [Required]
         public DateTime End { get; set; }
-        
+
         public IEnumerable<SelectListItem> Halls { get; set; }
 
         public List<AssignedUsersVM> Users { get; set; }

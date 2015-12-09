@@ -1,10 +1,10 @@
 ﻿using CHSystem.Models;
 using CHSystem.Repositories;
+using CHSystem.Services;
 using CHSystem.ViewModels.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CHSystem.Controllers
@@ -43,6 +43,8 @@ namespace CHSystem.Controllers
                     model.Locations = model.Locations.OrderBy(l => l.Name).ToList();
                     break;
             }
+
+            PagingService.Prepare(model, ControllerContext, model.Locations);
 
             return View(model);
         }

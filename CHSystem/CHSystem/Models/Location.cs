@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CHSystem.Models
 {
-    public class Location:BaseEntity
+    public class Location : BaseModel
     {
         public string Name { get; set; }
         public string Address { get; set; }

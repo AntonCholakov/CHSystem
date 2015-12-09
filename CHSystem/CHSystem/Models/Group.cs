@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CHSystem.Models
 {
-    public class Group:BaseEntity
+    public class Group : BaseModel
     {
         public string Name { get; set; }
 
