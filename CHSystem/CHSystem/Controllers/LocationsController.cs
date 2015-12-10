@@ -11,12 +11,12 @@ namespace CHSystem.Controllers
 {
     public class LocationsController : BaseController
     {
-        LocationRepository locationRep = new LocationRepository();
-
         public ActionResult List()
         {
             LocationsListVM model = new LocationsListVM();
             TryUpdateModel(model);
+            LocationRepository locationRep = new LocationRepository();
+
             model.Locations = locationRep.GetAll();
 
 
@@ -52,6 +52,7 @@ namespace CHSystem.Controllers
         public ActionResult Edit(int? id)
         {
             Location location;
+            LocationRepository locationRep = new LocationRepository();
 
             if (!id.HasValue)
             {
@@ -81,6 +82,7 @@ namespace CHSystem.Controllers
         {
             LocationsEditVM model = new LocationsEditVM();
             TryUpdateModel(model);
+            LocationRepository locationRep = new LocationRepository();
 
             if (!ModelState.IsValid)
             {
@@ -113,6 +115,7 @@ namespace CHSystem.Controllers
 
         public ActionResult Delete(int id)
         {
+            LocationRepository locationRep = new LocationRepository();
             locationRep.Delete(id);
 
             return RedirectToAction("List");

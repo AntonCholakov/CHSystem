@@ -11,12 +11,13 @@ namespace CHSystem.Controllers
 {
     public class GroupsController : BaseController
     {
-        GroupRepository groupRep = new GroupRepository();
-
         public ActionResult List()
         {
             GroupsListVM model = new GroupsListVM();
             TryUpdateModel(model);
+
+            GroupRepository groupRep = new GroupRepository();
+
             model.Groups = groupRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -45,6 +46,7 @@ namespace CHSystem.Controllers
         public ActionResult Edit(int? id)
         {
             Group group;
+            GroupRepository groupRep = new GroupRepository();
 
             if (!id.HasValue)
             {
@@ -72,6 +74,7 @@ namespace CHSystem.Controllers
         {
             GroupsEditVM model = new GroupsEditVM();
             TryUpdateModel(model);
+            GroupRepository groupRep = new GroupRepository();
 
             if (!ModelState.IsValid)
             {
@@ -101,6 +104,8 @@ namespace CHSystem.Controllers
 
         public ActionResult Delete(int id)
         {
+            GroupRepository groupRep = new GroupRepository();
+
             groupRep.Delete(id);
 
             return RedirectToAction("List");
