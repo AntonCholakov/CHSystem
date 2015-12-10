@@ -11,12 +11,12 @@ namespace CHSystem.Controllers
 {
     public class HallsController : BaseController
     {
-        HallRepository hallRep = new HallRepository();
-        
         public ActionResult List()
         {
             HallsListVM model = new HallsListVM();
             TryUpdateModel(model);
+
+            HallRepository hallRep = new HallRepository();
             model.Halls = hallRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -51,6 +51,7 @@ namespace CHSystem.Controllers
         public ActionResult Edit(int? id)
         {
             Hall hall;
+            HallRepository hallRep = new HallRepository();
 
             if (!id.HasValue)
             {
@@ -79,6 +80,7 @@ namespace CHSystem.Controllers
         {
             HallsEditVM model = new HallsEditVM();
             TryUpdateModel(model);
+            HallRepository hallRep = new HallRepository();
             
             if (!ModelState.IsValid)
             {
@@ -122,6 +124,8 @@ namespace CHSystem.Controllers
 
         public ActionResult Delete(int id)
         {
+            HallRepository hallRep = new HallRepository();
+
             hallRep.Delete(id);
 
             return RedirectToAction("List");

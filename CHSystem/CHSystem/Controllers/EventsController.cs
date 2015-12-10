@@ -11,13 +11,12 @@ namespace CHSystem.Controllers
 {
     public class EventsController : BaseController
     {
-        static UnitOfWork unitOfWork = new UnitOfWork();
-        EventRepository eventRep = new EventRepository(unitOfWork);
-
         public ActionResult List()
         {
             EventsListVM model = new EventsListVM();
             TryUpdateModel(model);
+
+            EventRepository eventRep = new EventRepository();
             model.Events = eventRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -70,7 +69,7 @@ namespace CHSystem.Controllers
             }
             else
             {
-                CHevent = eventRep.GetByID(id.Value);
+                CHevent = new EventRepository().GetByID(id.Value);
                 if (CHevent == null)
                 {
                     return RedirectToAction("List");
@@ -96,6 +95,9 @@ namespace CHSystem.Controllers
         {
             EventsEditVM model = new EventsEditVM();
             TryUpdateModel(model);
+
+            UnitOfWork unitOfWork = new UnitOfWork();
+            EventRepository eventRep = new EventRepository(unitOfWork);
 
             string selectedUsers = Request.Form["assignedUsers"];
             string[] assignedUsers;
@@ -160,7 +162,7 @@ namespace CHSystem.Controllers
         public List<AssignedUsersVM> PopulateAssignedUsers(Event CHevent)
         {
             List<AssignedUsersVM> assignedUsers = new List<AssignedUsersVM>();
-            List<User> users = new UserRepository(unitOfWork).GetAll();
+            List<User> users = new UserRepository().GetAll();
 
             if (CHevent.Users == null)
             {
@@ -193,7 +195,7 @@ namespace CHSystem.Controllers
 
             var assignedUsersHS = new HashSet<string>(assignedUsers);
             var eventUsers = new HashSet<int>(CHevent.Users.Select(g => g.ID));
-            foreach (var user in new UserRepository(unitOfWork).GetAll())
+            foreach (var user in new UserRepository().GetAll())
             {
                 if (assignedUsersHS.Contains(user.ID.ToString()))
                 {

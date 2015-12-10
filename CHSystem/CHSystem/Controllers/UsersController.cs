@@ -11,13 +11,12 @@ namespace CHSystem.Controllers
 {
     public class UsersController : BaseController
     {
-        static UnitOfWork unitOfWork = new UnitOfWork();
-        UserRepository userRep = new UserRepository(unitOfWork);
-
         public ActionResult List()
         {
             UsersListVM model = new UsersListVM();
             TryUpdateModel(model);
+            UserRepository userRep = new UserRepository();
+
             model.Users = userRep.GetAll();
 
             if (!String.IsNullOrEmpty(model.Search))
@@ -66,6 +65,8 @@ namespace CHSystem.Controllers
         public ActionResult Edit(int? id)
         {
             User user;
+            UserRepository userRep = new UserRepository();
+
             if (!id.HasValue)
             {
                 user = new User();
@@ -96,6 +97,8 @@ namespace CHSystem.Controllers
         {
             UsersEditVM model = new UsersEditVM();
             TryUpdateModel(model);
+            UnitOfWork unitOfWork = new UnitOfWork();
+            UserRepository userRep = new UserRepository(unitOfWork);
 
             string selectedGroups = Request.Form["assignedGroups"];
             string[] assignedGroups;
@@ -145,6 +148,7 @@ namespace CHSystem.Controllers
         
         public ActionResult Delete(int id)
         {
+            UserRepository userRep = new UserRepository();
             userRep.Delete(id);
 
             return RedirectToAction("List");
@@ -153,7 +157,7 @@ namespace CHSystem.Controllers
         public List<AssignedGroupsVM> PopulateAssignedGroups(User user)
         {
             List<AssignedGroupsVM> assignedGroups = new List<AssignedGroupsVM>();
-            List<Group> groups = new GroupRepository(unitOfWork).GetAll();
+            List<Group> groups = new GroupRepository().GetAll();
 
             if (user.Groups==null)
             {
@@ -186,7 +190,7 @@ namespace CHSystem.Controllers
 
             var assignedGroupsHS = new HashSet<string>(assignedGroups);
             var userGroups = new HashSet<int>(user.Groups.Select(g => g.ID));
-            foreach (var group in new GroupRepository(unitOfWork).GetAll())
+            foreach (var group in new GroupRepository().GetAll())
             {
                 if (assignedGroupsHS.Contains(group.ID.ToString()))
                 {
