@@ -171,6 +171,7 @@
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\PagingService.cs" />
     <Compile Include="ViewModels\Account\AccountLoginVM.cs" />
+    <Compile Include="ViewModels\EditVM.cs" />
     <Compile Include="ViewModels\Events\EventsEditVM.cs" />
     <Compile Include="ViewModels\Events\EventsListVM.cs" />
     <Compile Include="ViewModels\Groups\GroupsEditVM.cs" />
