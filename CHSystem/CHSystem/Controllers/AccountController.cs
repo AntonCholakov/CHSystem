@@ -35,11 +35,23 @@ namespace CHSystem.Controllers
 
             if (AuthenticationService.LoggedUser == null)
             {
-                ModelState.AddModelError("Wrong Data", "Invalid username/password");
+                ModelState.AddModelError(String.Empty, "Invalid username or password");
                 return View(model);
             }
 
+            if (String.IsNullOrEmpty(model.RedirectUrl))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return Redirect(model.RedirectUrl);
+        }
+
+        public ActionResult Logout()
+        {
+            AuthenticationService.Logout();
+
+            return RedirectToAction("Login");
         }
     }
 }
