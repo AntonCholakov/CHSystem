@@ -7,7 +7,7 @@ namespace CHSystem.ViewModels.Events
 {
     public class EventsEditVM : EditVM
     {
-        [Required, StringLength(60, MinimumLength = 6, ErrorMessage = "Name not in range")]
+        [Required, StringLength(60, MinimumLength = 3, ErrorMessage = "Name must be at least 3 symbols")]
         public string Name { get; set; }
 
         [Required]
