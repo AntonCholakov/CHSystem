@@ -80,7 +80,6 @@ namespace CHSystem.Controllers
             EventsEditVM model = new EventsEditVM();
             model.ID = CHevent.ID;
             model.Name = CHevent.Name;
-            model.Date = CHevent.Date;
             model.Start = CHevent.Start;
             model.End = CHevent.End;
             model.HallID = CHevent.HallID;
@@ -133,7 +132,6 @@ namespace CHSystem.Controllers
             
             CHevent.ID = model.ID;
             CHevent.Name = model.Name;
-            CHevent.Date = model.Date;
             CHevent.Start = model.Start;
             CHevent.End = model.End;
             CHevent.HallID = model.HallID;

@@ -14,9 +14,6 @@ namespace CHSystem.ViewModels.Events
         public int HallID { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
-
-        [Required]
         public DateTime Start { get; set; }
 
         [Required]
