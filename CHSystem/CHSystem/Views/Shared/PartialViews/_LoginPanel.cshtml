@@ -1,0 +1,27 @@
+﻿<ul class="nav navbar-nav navbar-right">
+    @if (CHSystem.Services.AuthenticationService.LoggedUser != null)
+    {
+        <li><a>@CHSystem.Services.AuthenticationService.LoggedUser.Username</a></li>
+        //if (Models.AuthenticationManager.IsAdmin)
+        //{
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Panel <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Users", "List", "Users")</li>
+                    <li>@Html.ActionLink("Groups", "List", "Groups")</li>
+                    <li role="separator" class="divider"></li>
+                    <li>@Html.ActionLink("Events", "List", "Events")</li>
+                    <li>@Html.ActionLink("Halls", "List", "Halls")</li>
+                    <li>@Html.ActionLink("Locations", "List", "Locations")</li>
+                    <li role="separator" class="divider"></li>
+                    <li>@Html.ActionLink("Calendar", "Calendar", "Calendar")</li>
+                </ul>
+            </li>
+        //}
+        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+    }
+</ul>
