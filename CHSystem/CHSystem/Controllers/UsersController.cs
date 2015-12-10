@@ -11,6 +11,8 @@ namespace CHSystem.Controllers
 {
     public class UsersController : BaseController
     {
+        UnitOfWork unitOfWork = new UnitOfWork();
+
         public ActionResult List()
         {
             UsersListVM model = new UsersListVM();
@@ -74,7 +76,7 @@ namespace CHSystem.Controllers
             else
             {
                 user = userRep.GetByID(id.Value);
-                if (user==null)
+                if (user == null)
                 {
                     return RedirectToAction("List");
                 }
@@ -87,7 +89,7 @@ namespace CHSystem.Controllers
             model.LastName = user.LastName;
             model.Email = user.Email;
             model.Groups = PopulateAssignedGroups(user);
-            
+
             return View(model);
         }
 
@@ -97,7 +99,7 @@ namespace CHSystem.Controllers
         {
             UsersEditVM model = new UsersEditVM();
             TryUpdateModel(model);
-            UnitOfWork unitOfWork = new UnitOfWork();
+
             UserRepository userRep = new UserRepository(unitOfWork);
 
             string selectedGroups = Request.Form["assignedGroups"];
@@ -135,6 +137,7 @@ namespace CHSystem.Controllers
 
             user.ID = model.ID;
             user.Username = model.Username;
+            user.Password = model.Password;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
@@ -145,7 +148,7 @@ namespace CHSystem.Controllers
 
             return RedirectToAction("List");
         }
-        
+
         public ActionResult Delete(int id)
         {
             UserRepository userRep = new UserRepository();
@@ -159,7 +162,7 @@ namespace CHSystem.Controllers
             List<AssignedGroupsVM> assignedGroups = new List<AssignedGroupsVM>();
             List<Group> groups = new GroupRepository().GetAll();
 
-            if (user.Groups==null)
+            if (user.Groups == null)
             {
                 user.Groups = new List<Group>();
             }
@@ -170,7 +173,7 @@ namespace CHSystem.Controllers
                 {
                     ID = g.ID,
                     Name = g.Name,
-                    IsAssigned = user.Groups.Contains(g)
+                    IsAssigned = user.Groups.Select(gr => gr.ID).Contains(g.ID)
                 });
             }
 
@@ -178,19 +181,19 @@ namespace CHSystem.Controllers
         }
         public void UpdateUserGroups(User user, string[] assignedGroups)
         {
-            if (assignedGroups==null)
+            if (assignedGroups == null)
             {
                 return;
             }
 
-            if (user.Groups==null)
+            if (user.Groups == null)
             {
                 user.Groups = new List<Group>();
             }
 
             var assignedGroupsHS = new HashSet<string>(assignedGroups);
             var userGroups = new HashSet<int>(user.Groups.Select(g => g.ID));
-            foreach (var group in new GroupRepository().GetAll())
+            foreach (var group in new GroupRepository(unitOfWork).GetAll())
             {
                 if (assignedGroupsHS.Contains(group.ID.ToString()))
                 {

@@ -6,6 +6,10 @@
     ViewBag.Title = "List Users";
 }
 
+@section footerSection {
+    @Html.Partial("~/Views/Shared/PartialViews/_DeleteConfirmation.cshtml")
+}
+
 <h2>List</h2>
 
 <p>
@@ -65,7 +69,9 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id= user.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id= user.ID })
+            <a href="#" data-toggle="modal" data-target="#modal-delete-confirmation" data-url="/Users/Delete/@user.ID" data-additionalinfo="@user.Username">
+                Delete
+            </a>
         </td>
     </tr>
 }

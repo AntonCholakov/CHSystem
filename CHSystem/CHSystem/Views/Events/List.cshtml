@@ -4,6 +4,10 @@
     ViewBag.Title = "List";
 }
 
+@section footerSection {
+    @Html.Partial("~/Views/Shared/PartialViews/_DeleteConfirmation.cshtml")
+}
+
 <h2>List</h2>
 
 <p>
@@ -47,29 +51,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Events) {
+@foreach (var CHevent in Model.Events) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => CHevent.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Hall.Name)
+            @Html.DisplayFor(modelItem => CHevent.Hall.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Start)
+            @Html.DisplayFor(modelItem => CHevent.Start)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.End)
+            @Html.DisplayFor(modelItem => CHevent.End)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = CHevent.ID }) |
+            <a href="#" data-toggle="modal" data-target="#modal-delete-confirmation" data-url="/Events/Delete/@CHevent.ID" data-additionalinfo="@CHevent.Name">
+                Delete
+            </a>
         </td>
     </tr>
 }
 
 </table>
+
 
 @Html.Partial("~/Views/Shared/PartialViews/_PagingPartial.cshtml", Model.Pager)
 <br />

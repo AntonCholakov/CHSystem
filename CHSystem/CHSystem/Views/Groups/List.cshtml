@@ -4,6 +4,10 @@
     ViewBag.Title = "List Groups";
 }
 
+@section footerSection {
+    @Html.Partial("~/Views/Shared/PartialViews/_DeleteConfirmation.cshtml")
+}
+
 <h2>List</h2>
 
 <p>
@@ -34,7 +38,9 @@
         <td>@Html.DisplayFor(modelItem => group.Name)</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = group.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = group.ID })
+            <a href="#" data-toggle="modal" data-target="#modal-delete-confirmation" data-url="/Groups/Delete/@group.ID" data-additionalinfo="@group.Name">
+                Delete
+            </a>
         </td>
     </tr>
 }

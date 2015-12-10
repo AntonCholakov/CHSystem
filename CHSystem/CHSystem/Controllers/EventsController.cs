@@ -11,6 +11,8 @@ namespace CHSystem.Controllers
 {
     public class EventsController : BaseController
     {
+        UnitOfWork unitOfWork = new UnitOfWork();
+
         public ActionResult List()
         {
             EventsListVM model = new EventsListVM();
@@ -96,7 +98,6 @@ namespace CHSystem.Controllers
             EventsEditVM model = new EventsEditVM();
             TryUpdateModel(model);
 
-            UnitOfWork unitOfWork = new UnitOfWork();
             EventRepository eventRep = new EventRepository(unitOfWork);
 
             string selectedUsers = Request.Form["assignedUsers"];
@@ -147,6 +148,13 @@ namespace CHSystem.Controllers
             return RedirectToAction("List");
         }
 
+        public ActionResult Delete(int id)
+        {
+            new EventRepository().Delete(id);
+
+            return RedirectToAction("List");
+        }
+
         private IEnumerable<SelectListItem> GetHalls()
         {
             var halls = new HallRepository().GetAll()
@@ -175,7 +183,7 @@ namespace CHSystem.Controllers
                 {
                     ID = u.ID,
                     Name = u.FirstName + " " + u.LastName,
-                    IsAssigned = CHevent.Users.Contains(u)
+                    IsAssigned = CHevent.Users.Select(us => us.ID).Contains(u.ID)
                 });
             }
 
@@ -195,7 +203,7 @@ namespace CHSystem.Controllers
 
             var assignedUsersHS = new HashSet<string>(assignedUsers);
             var eventUsers = new HashSet<int>(CHevent.Users.Select(g => g.ID));
-            foreach (var user in new UserRepository().GetAll())
+            foreach (var user in new UserRepository(unitOfWork).GetAll())
             {
                 if (assignedUsersHS.Contains(user.ID.ToString()))
                 {

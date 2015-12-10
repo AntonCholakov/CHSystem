@@ -37,23 +37,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Locations) {
+@foreach (var location in Model.Locations) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => location.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(modelItem => location.Address)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Floor)
+            @Html.DisplayFor(modelItem => location.Floor)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RoomNumber)
+            @Html.DisplayFor(modelItem => location.RoomNumber)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = location.ID }) |
+            <a href="#" data-toggle="modal" data-target="#modal-delete-confirmation" data-url="/Locations/Delete/@location.ID" data-additionalinfo="@location.Name">
+                Delete
+            </a>
         </td>
     </tr>
 }
