@@ -4,6 +4,10 @@
     ViewBag.Title = "List";
 }
 
+@section footerSection {
+    @Html.Partial("~/Views/Shared/PartialViews/_DeleteConfirmation.cshtml")
+}
+
 <h2>List</h2>
 
 <p>
@@ -37,17 +41,19 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Halls) {
+@foreach (var hall in Model.Halls) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => hall.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Location.Name)
+            @Html.DisplayFor(modelItem => hall.Location.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = hall.ID }) |
+            <a href="#" data-toggle="modal" data-target="#modal-delete-confirmation" data-url="/Halls/Delete/@hall.ID" data-additionalinfo="@hall.Name">
+                Delete
+            </a>
         </td>
     </tr>
 }

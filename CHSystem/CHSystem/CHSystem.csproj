@@ -212,6 +212,7 @@
     <Content Include="Views\Shared\PartialViews\_LoginPanel.cshtml" />
     <Content Include="Views\Calendar\CalendarGoogle.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Shared\PartialViews\_DeleteConfirmation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,6 +11,9 @@ namespace CHSystem.ViewModels.Users
         public string Username { get; set; }
 
         [Required, StringLength(60, MinimumLength = 3, ErrorMessage = "Name must be at least 3 symbols")]
+        public string Password { get; set; }
+        
+        [Required, StringLength(60, MinimumLength = 3, ErrorMessage = "Name must be at least 3 symbols")]
         public string FirstName { get; set; }
 
         [Required, StringLength(60, MinimumLength = 3, ErrorMessage = "Name must be at least 3 symbols")]
